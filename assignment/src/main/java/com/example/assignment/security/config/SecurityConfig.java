@@ -26,8 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf()
-                .and().formLogin().disable()
+                .csrf().disable()
+                .formLogin().disable()
 
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
