@@ -24,6 +24,4 @@ jwt:
   exp:
     access: ${ACCESS}
     refresh: ${REFRESH}
-
-server:
-  port: 8888
+    
