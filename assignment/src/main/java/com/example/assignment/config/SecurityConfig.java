@@ -1,7 +1,9 @@
-package com.example.assignment.security.config;
+package com.example.assignment.config;
 
 import com.example.assignment.config.FilterConfig;
 import com.example.assignment.error.ExceptionHandlerFilter;
+import com.example.assignment.security.jwt.JwtTokenFilter;
+import com.example.assignment.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final ExceptionHandlerFilter exceptionHandlerFilter;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -40,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
 
                 .and()
-                .apply(new FilterConfig(exceptionHandlerFilter));
+                .apply(new FilterConfig(exceptionHandlerFilter, jwtTokenProvider));
 
     }
 
