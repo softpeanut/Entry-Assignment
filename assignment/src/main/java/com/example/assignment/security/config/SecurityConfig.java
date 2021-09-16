@@ -1,5 +1,8 @@
-package com.example.assignment.config;
+package com.example.assignment.security.config;
 
+import com.example.assignment.config.FilterConfig;
+import com.example.assignment.error.ExceptionHandlerFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final ExceptionHandlerFilter exceptionHandlerFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -32,7 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/member/auth/signup").permitAll()
                 .antMatchers("/member/auth/login").permitAll()
                 .antMatchers("/member/auth/reissue").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+
+                .and()
+                .apply(new FilterConfig(exceptionHandlerFilter));
 
     }
 
