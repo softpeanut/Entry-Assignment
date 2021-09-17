@@ -1,8 +1,6 @@
 package com.example.assignment.config;
 
-import com.example.assignment.config.FilterConfig;
 import com.example.assignment.error.ExceptionHandlerFilter;
-import com.example.assignment.security.jwt.JwtTokenFilter;
 import com.example.assignment.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/member/auth/signup").permitAll()
                 .antMatchers("/member/auth/login").permitAll()
                 .antMatchers("/member/auth/reissue").permitAll()
+
+                .antMatchers("/feed/show").permitAll()
+                .antMatchers("/feed/show/{feed-id}").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
