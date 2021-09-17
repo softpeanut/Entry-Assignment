@@ -4,6 +4,7 @@ import com.example.assignment.payload.feed.request.FeedRequest;
 import com.example.assignment.payload.feed.response.FeedResponse;
 import com.example.assignment.service.feed.FeedServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class FeedController {
     private final FeedServiceImpl feedService;
 
     @PostMapping("/create")
+    @ResponseStatus(HttpStatus.CREATED)
     public void createFeed(@RequestBody FeedRequest request) {
         feedService.createFeed(request);
     }
@@ -37,6 +39,16 @@ public class FeedController {
     @DeleteMapping("/{feed-id}")
     public void deleteFeed(@PathVariable(name = "feed-id") Integer id) {
         feedService.deleteFeed(id);
+    }
+
+    @PostMapping("/bookmark/{feed-id}")
+    public void addBookMark(@PathVariable(name = "feed-id") Integer id) {
+        feedService.addBookMark(id);
+    }
+
+    @DeleteMapping("/bookmark/{feed-id}")
+    public void removeBookMark(@PathVariable(name = "feed-id") Integer id) {
+        feedService.removeBookMark(id);
     }
 
 }
