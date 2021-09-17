@@ -73,7 +73,7 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public void deleteFeed(Integer id) {
+    public void removeFeed(Integer id) {
         feedRepository.findById(id)
                 .orElseThrow(FeedNotFoundException::new);
 

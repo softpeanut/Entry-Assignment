@@ -9,7 +9,7 @@ public interface FeedService {
     List<FeedResponse> showAllFeeds();
     FeedResponse showFeed(Integer id);
     void updateFeed(Integer id, FeedRequest request);
-    void deleteFeed(Integer id);
+    void removeFeed(Integer id);
     void addBookMark(Integer id);
     void removeBookMark(Integer id);
     List<FeedResponse> myBookMarkFeeds();
