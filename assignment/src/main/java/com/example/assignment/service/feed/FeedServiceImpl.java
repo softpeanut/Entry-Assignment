@@ -40,6 +40,7 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<FeedResponse> showAllFeeds() {
         return feedRepository.findAll()
                 .stream()
@@ -55,6 +56,7 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FeedResponse showFeed(Integer id) {
         return feedRepository.findById(id)
                 .map(feed -> new FeedResponse(feed.getId(), feed.getTitle(), feed.getContent()))
@@ -102,6 +104,7 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<FeedResponse> myBookMarkFeeds() {
         return bookMarkRepository.findByMemberId(MemberFacade.getCurrentMemberId())
                 .stream()
