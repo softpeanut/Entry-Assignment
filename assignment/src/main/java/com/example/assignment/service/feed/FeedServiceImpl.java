@@ -4,6 +4,7 @@ import com.example.assignment.entity.feed.Feed;
 import com.example.assignment.entity.feed.FeedRepository;
 import com.example.assignment.entity.member.Member;
 import com.example.assignment.entity.member.MemberRepository;
+import com.example.assignment.exception.FeedNotFoundException;
 import com.example.assignment.exception.MemberNotFoundException;
 import com.example.assignment.facade.MemberFacade;
 import com.example.assignment.payload.feed.request.FeedRequest;
@@ -51,7 +52,7 @@ public class FeedServiceImpl implements FeedService {
     public FeedResponse showFeed(Integer id) {
         return feedRepository.findById(id)
                 .map(feed -> new FeedResponse(feed.getTitle(), feed.getContent()))
-                .orElseThrow();
+                .orElseThrow(FeedNotFoundException::new);
     }
 
     @Override
@@ -60,11 +61,14 @@ public class FeedServiceImpl implements FeedService {
                 .map(feed -> feedRepository.save(
                         feed.update(request.getTitle(), request.getContent())
                 ))
-                .orElseThrow();
+                .orElseThrow(FeedNotFoundException::new);
     }
 
     @Override
     public void deleteFeed(Integer id) {
+        feedRepository.findById(id)
+                .orElseThrow(FeedNotFoundException::new);
+
         feedRepository.deleteById(id);
     }
 

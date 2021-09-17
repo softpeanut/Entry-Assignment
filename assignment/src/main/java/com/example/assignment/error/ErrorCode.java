@@ -12,7 +12,9 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(404, "Member Not Found"),
 
     INVALID_PASSWORD(401, "Invalid Password"),
-    INVALID_TOKEN(401, "Invalid Token");
+    INVALID_TOKEN(401, "Invalid Token"),
+
+    FEED_NOT_FOUND(404, "Feed Not Found");
 
     private int status;
     private String message;
