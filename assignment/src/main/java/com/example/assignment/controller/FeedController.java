@@ -1,4 +1,4 @@
-package com.example.assignment.controller.feed;
+package com.example.assignment.controller;
 
 import com.example.assignment.payload.feed.request.FeedRequest;
 import com.example.assignment.payload.feed.response.FeedResponse;

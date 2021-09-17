@@ -40,6 +40,7 @@ public class FeedServiceImpl implements FeedService {
                 .stream()
                 .map(feed -> {
                     FeedResponse response = FeedResponse.builder()
+                            .id(feed.getId())
                             .title(feed.getTitle())
                             .content(feed.getContent())
                             .build();
@@ -51,7 +52,7 @@ public class FeedServiceImpl implements FeedService {
     @Override
     public FeedResponse showFeed(Integer id) {
         return feedRepository.findById(id)
-                .map(feed -> new FeedResponse(feed.getTitle(), feed.getContent()))
+                .map(feed -> new FeedResponse(feed.getId(), feed.getTitle(), feed.getContent()))
                 .orElseThrow(FeedNotFoundException::new);
     }
 

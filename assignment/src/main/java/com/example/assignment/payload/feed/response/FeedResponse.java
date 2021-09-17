@@ -10,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 @NotEmpty
 @AllArgsConstructor
 public class FeedResponse {
+    private Integer id;
     private String title;
     private String content;
 }

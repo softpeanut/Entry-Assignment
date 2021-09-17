@@ -1,4 +1,4 @@
-package com.example.assignment.controller.member;
+package com.example.assignment.controller;
 
 import com.example.assignment.payload.member.request.LoginRequest;
 import com.example.assignment.payload.member.request.SignupRequest;
