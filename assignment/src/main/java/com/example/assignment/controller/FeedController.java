@@ -37,8 +37,8 @@ public class FeedController {
     }
 
     @DeleteMapping("/{feed-id}")
-    public void deleteFeed(@PathVariable(name = "feed-id") Integer id) {
-        feedService.deleteFeed(id);
+    public void removeFeed(@PathVariable(name = "feed-id") Integer id) {
+        feedService.removeFeed(id);
     }
 
     @PostMapping("/bookmark/{feed-id}")
