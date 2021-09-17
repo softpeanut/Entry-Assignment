@@ -6,14 +6,17 @@ import com.example.assignment.entity.member.Role;
 import com.example.assignment.entity.refreshtoken.RefreshToken;
 import com.example.assignment.entity.refreshtoken.RefreshTokenRepository;
 import com.example.assignment.exception.*;
+import com.example.assignment.facade.MemberFacade;
 import com.example.assignment.payload.member.request.LoginRequest;
 import com.example.assignment.payload.member.request.SignupRequest;
+import com.example.assignment.payload.member.request.UpdatePasswordRequest;
 import com.example.assignment.payload.member.response.TokenResponse;
 import com.example.assignment.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -83,6 +86,20 @@ public class MemberServiceImpl implements MemberService {
         );
 
         return new TokenResponse(accessToken, refreshToken);
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(UpdatePasswordRequest request) {
+        Member member = memberRepository.findById(MemberFacade.getCurrentMemberId())
+                .orElseThrow(MemberNotFoundException::new);
+
+        if(!passwordEncoder.matches(request.getPassword(), member.getPassword()))
+            throw new InvalidPasswordException();
+
+        memberRepository.findById(MemberFacade.getCurrentMemberId())
+                .map(password -> password.updatePassword(passwordEncoder.encode(request.getNewPassword())))
+                .orElseThrow(MemberNotFoundException::new);
     }
 
 }
