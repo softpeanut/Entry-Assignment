@@ -25,4 +25,11 @@ public class Feed extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public Feed update(String title, String content) {
+        this.title = title;
+        this.content = content;
+        return this;
+    }
+
 }
