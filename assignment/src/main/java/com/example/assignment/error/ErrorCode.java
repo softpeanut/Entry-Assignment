@@ -14,7 +14,9 @@ public enum ErrorCode {
     INVALID_PASSWORD(401, "Invalid Password"),
     INVALID_TOKEN(401, "Invalid Token"),
 
-    FEED_NOT_FOUND(404, "Feed Not Found");
+    FEED_NOT_FOUND(404, "Feed Not Found"),
+
+    BOOK_MARK_ALREADY_EXISTS(409, "Book Mark Already Exists");
 
     private int status;
     private String message;
