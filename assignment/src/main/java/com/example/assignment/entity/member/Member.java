@@ -1,5 +1,6 @@
 package com.example.assignment.entity.member;
 
+import com.example.assignment.entity.feed.Feed;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Builder
@@ -31,6 +33,9 @@ public class Member implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Feed> feeds;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
