@@ -51,4 +51,9 @@ public class FeedController {
         feedService.removeBookMark(id);
     }
 
+    @GetMapping("/bookmarks")
+    public List<FeedResponse> myBookMarkFeeds() {
+        return feedService.myBookMarkFeeds();
+    }
+
 }
