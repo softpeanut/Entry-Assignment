@@ -30,9 +30,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void signup(SignupRequest request) {
 
-        if(memberRepository.findByName(request.getName()) == null)
+        if(memberRepository.findByName(request.getName()).isPresent())
             throw new MemberNameAlreadyExistsException();
-        else if(memberRepository.findByUsername(request.getUsername()) == null)
+        else if(memberRepository.findByUsername(request.getUsername()).isPresent())
             throw new MemberUsernameAlreadyExistsException();
 
         memberRepository.save(
