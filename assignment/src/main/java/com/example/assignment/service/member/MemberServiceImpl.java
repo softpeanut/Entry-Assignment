@@ -102,4 +102,12 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(MemberNotFoundException::new);
     }
 
+    @Override
+    public void removeMember(Integer id) {
+        memberRepository.findById(id)
+                .orElseThrow(MemberNotFoundException::new);
+
+        memberRepository.deleteById(id);
+    }
+
 }

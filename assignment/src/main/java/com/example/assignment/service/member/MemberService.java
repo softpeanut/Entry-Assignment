@@ -10,4 +10,5 @@ public interface MemberService {
     TokenResponse login(LoginRequest request);
     TokenResponse reissue(String token);
     void updatePassword(UpdatePasswordRequest request);
+    void removeMember(Integer id);
 }

@@ -37,4 +37,9 @@ public class MemberController {
         memberService.updatePassword(request);
     }
 
+    @DeleteMapping("/{member-id}")
+    public void removeFeed(@PathVariable(name = "member-id") Integer id) {
+        memberService.removeMember(id);
+    }
+
 }
