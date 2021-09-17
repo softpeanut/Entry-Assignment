@@ -10,4 +10,6 @@ public interface FeedService {
     FeedResponse showFeed(Integer id);
     void updateFeed(Integer id, FeedRequest request);
     void deleteFeed(Integer id);
+    void addBookMark(Integer id);
+    void removeBookMark(Integer id);
 }

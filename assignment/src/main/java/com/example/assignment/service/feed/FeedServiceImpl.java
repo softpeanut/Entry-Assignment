@@ -1,9 +1,12 @@
 package com.example.assignment.service.feed;
 
+import com.example.assignment.entity.bookmark.BookMark;
+import com.example.assignment.entity.bookmark.BookMarkRepository;
 import com.example.assignment.entity.feed.Feed;
 import com.example.assignment.entity.feed.FeedRepository;
 import com.example.assignment.entity.member.Member;
 import com.example.assignment.entity.member.MemberRepository;
+import com.example.assignment.exception.BookMarkAlreadyExistsException;
 import com.example.assignment.exception.FeedNotFoundException;
 import com.example.assignment.exception.MemberNotFoundException;
 import com.example.assignment.facade.MemberFacade;
@@ -11,6 +14,7 @@ import com.example.assignment.payload.feed.request.FeedRequest;
 import com.example.assignment.payload.feed.response.FeedResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 public class FeedServiceImpl implements FeedService {
     private final FeedRepository feedRepository;
     private final MemberRepository memberRepository;
+    private final BookMarkRepository bookMarkRepository;
 
     @Override
     public void createFeed(FeedRequest request) {
@@ -71,6 +76,29 @@ public class FeedServiceImpl implements FeedService {
                 .orElseThrow(FeedNotFoundException::new);
 
         feedRepository.deleteById(id);
+    }
+
+    @Override
+    public void addBookMark(Integer id) {
+        Member member = memberRepository.findById(MemberFacade.getCurrentMemberId())
+                .orElseThrow(MemberNotFoundException::new);
+
+        Feed feed = feedRepository.findById(id)
+                .orElseThrow(FeedNotFoundException::new);
+
+        if(bookMarkRepository.findByMemberIdAndFeedId(member.getId(), id).isPresent())
+            throw new BookMarkAlreadyExistsException();
+
+        bookMarkRepository.save(BookMark.builder()
+                .member(member)
+                .feed(feed)
+                .build());
+    }
+
+    @Override
+    @Transactional
+    public void removeBookMark(Integer id) {
+        bookMarkRepository.deleteByMemberIdAndFeedId(MemberFacade.getCurrentMemberId(), id);
     }
 
 }
