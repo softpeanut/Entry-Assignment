@@ -12,4 +12,5 @@ public interface FeedService {
     void deleteFeed(Integer id);
     void addBookMark(Integer id);
     void removeBookMark(Integer id);
+    List<FeedResponse> myBookMarkFeeds();
 }
