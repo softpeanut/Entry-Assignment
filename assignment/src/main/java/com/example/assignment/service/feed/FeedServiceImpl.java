@@ -26,6 +26,7 @@ public class FeedServiceImpl implements FeedService {
     private final BookMarkRepository bookMarkRepository;
 
     @Override
+    @Transactional
     public void createFeed(FeedRequest request) {
 
         Member member = memberRepository.findById(MemberFacade.getCurrentMemberId())
@@ -64,6 +65,7 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
+    @Transactional
     public void updateFeed(Integer id, FeedRequest request) {
         feedRepository.findById(id)
                 .map(feed -> feedRepository.save(
@@ -73,6 +75,7 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
+    @Transactional
     public void removeFeed(Integer id) {
         feedRepository.findById(id)
                 .orElseThrow(FeedNotFoundException::new);
@@ -81,6 +84,7 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
+    @Transactional
     public void addBookMark(Integer id) {
         Member member = memberRepository.findById(MemberFacade.getCurrentMemberId())
                 .orElseThrow(MemberNotFoundException::new);

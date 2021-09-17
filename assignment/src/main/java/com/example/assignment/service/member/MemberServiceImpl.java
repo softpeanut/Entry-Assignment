@@ -31,6 +31,7 @@ public class MemberServiceImpl implements MemberService {
     private final JwtTokenProvider tokenProvider;
 
     @Override
+    @Transactional
     public void signup(SignupRequest request) {
 
         if(memberRepository.findByName(request.getName()).isPresent())
@@ -62,6 +63,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public TokenResponse reissue(String refreshToken) {
         if(!tokenProvider.isRefreshToken(refreshToken) || !tokenProvider.validateToken(refreshToken))
             throw new InvalidTokenException();
@@ -73,6 +75,7 @@ public class MemberServiceImpl implements MemberService {
         return new TokenResponse(tokenProvider.createAccessToken(newRefreshToken.getUsername()), refreshToken);
     }
 
+    @Transactional
     public TokenResponse createToken(String username) {
         String accessToken = tokenProvider.createAccessToken(username);
         String refreshToken = tokenProvider.createRefreshToken(username);
@@ -103,6 +106,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void removeMember(Integer id) {
         memberRepository.findById(id)
                 .orElseThrow(MemberNotFoundException::new);
