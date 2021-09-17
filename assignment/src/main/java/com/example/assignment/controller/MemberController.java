@@ -2,6 +2,7 @@ package com.example.assignment.controller;
 
 import com.example.assignment.payload.member.request.LoginRequest;
 import com.example.assignment.payload.member.request.SignupRequest;
+import com.example.assignment.payload.member.request.UpdatePasswordRequest;
 import com.example.assignment.payload.member.response.TokenResponse;
 import com.example.assignment.service.member.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,11 @@ public class MemberController {
     @PutMapping("/auth/reissue")
     public TokenResponse reissue(@RequestHeader(name = "X-Refresh-Token") String token) {
         return memberService.reissue(token);
+    }
+
+    @PatchMapping("/password")
+    public void updatePassword(@RequestBody UpdatePasswordRequest request) {
+        memberService.updatePassword(request);
     }
 
 }
