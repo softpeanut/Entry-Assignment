@@ -7,5 +7,4 @@ import java.util.Optional;
 public interface BookMarkRepository extends JpaRepository<BookMark, Integer> {
     List<BookMark> findByMemberId(Integer id);
     Optional<BookMark> findByMemberIdAndFeedId(Integer memberId, Integer postId);
-    void deleteByMemberIdAndFeedId(Integer memberId, Integer postId);
 }

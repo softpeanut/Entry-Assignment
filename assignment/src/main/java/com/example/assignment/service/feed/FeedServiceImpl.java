@@ -7,6 +7,7 @@ import com.example.assignment.entity.feed.FeedRepository;
 import com.example.assignment.entity.member.Member;
 import com.example.assignment.entity.member.MemberRepository;
 import com.example.assignment.exception.BookMarkAlreadyExistsException;
+import com.example.assignment.exception.BookMarkNotFoundException;
 import com.example.assignment.exception.FeedNotFoundException;
 import com.example.assignment.exception.MemberNotFoundException;
 import com.example.assignment.facade.MemberFacade;
@@ -104,7 +105,10 @@ public class FeedServiceImpl implements FeedService {
     @Override
     @Transactional
     public void removeBookMark(Integer id) {
-        bookMarkRepository.deleteByMemberIdAndFeedId(MemberFacade.getCurrentMemberId(), id);
+        BookMark bookMark = bookMarkRepository.findByMemberIdAndFeedId(MemberFacade.getCurrentMemberId(), id)
+                .orElseThrow(BookMarkNotFoundException::new);
+
+        bookMarkRepository.deleteById(bookMark.getId());
     }
 
     @Override
