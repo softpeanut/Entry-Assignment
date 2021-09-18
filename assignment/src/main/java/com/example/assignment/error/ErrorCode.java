@@ -16,7 +16,8 @@ public enum ErrorCode {
 
     FEED_NOT_FOUND(404, "Feed Not Found"),
 
-    BOOK_MARK_ALREADY_EXISTS(409, "Book Mark Already Exists");
+    BOOK_MARK_ALREADY_EXISTS(409, "Bookmark Already Exists"),
+    BOOK_MARK_NOT_FOUND(404, "Bookmark Not Found");
 
     private int status;
     private String message;
