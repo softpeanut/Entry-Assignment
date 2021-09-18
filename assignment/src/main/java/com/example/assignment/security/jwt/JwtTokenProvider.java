@@ -44,6 +44,7 @@ public class JwtTokenProvider {
 
     public String createAccessToken(String username) {
         return Jwts.builder()
+                .setHeaderParam("typ", "jwt")
                 .setSubject(username)
                 .claim("type", "access")
                 .setIssuedAt(new Date())
@@ -54,6 +55,7 @@ public class JwtTokenProvider {
 
     public String createRefreshToken(String username) {
         return Jwts.builder()
+                .setHeaderParam("typ", "jwt")
                 .setSubject(username)
                 .claim("type", "refresh")
                 .setIssuedAt(new Date())
