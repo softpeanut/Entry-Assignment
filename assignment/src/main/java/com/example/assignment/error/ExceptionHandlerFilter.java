@@ -22,11 +22,11 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (BusinessException e) {
             ErrorCode errorCode = e.getErrorCode();
-            ExceptionResponse errorResponse =
+            ExceptionResponse exceptionResponse =
                     new ExceptionResponse(errorCode.getMessage());
             response.setStatus(errorCode.getStatus());
             response.setContentType("application/json");
-            response.getWriter().write(errorResponse.toString());
+            response.getWriter().write(exceptionResponse.toString());
         }
     }
 

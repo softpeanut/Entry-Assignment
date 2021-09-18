@@ -59,13 +59,13 @@ public class MemberServiceImpl implements MemberService {
             throw new InvalidPasswordException();
 
         return createToken(request.getUsername());
-
     }
 
     @Override
     @Transactional
     public TokenResponse reissue(String refreshToken) {
-        if(!tokenProvider.isRefreshToken(refreshToken) || !tokenProvider.validateToken(refreshToken))
+        if(!tokenProvider.isRefreshToken(refreshToken)
+                || !tokenProvider.validateToken(refreshToken))
             throw new InvalidTokenException();
 
         RefreshToken newRefreshToken = refreshTokenRepository.findByRefreshToken(refreshToken)
@@ -73,22 +73,6 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(InvalidTokenException::new);
 
         return new TokenResponse(tokenProvider.createAccessToken(newRefreshToken.getUsername()), refreshToken);
-    }
-
-    @Transactional
-    public TokenResponse createToken(String username) {
-        String accessToken = tokenProvider.createAccessToken(username);
-        String refreshToken = tokenProvider.createRefreshToken(username);
-
-        refreshTokenRepository.save(
-                RefreshToken.builder()
-                        .username(username)
-                        .refreshToken(refreshToken)
-                        .expiration(refreshTokenExpirationTime)
-                        .build()
-        );
-
-        return new TokenResponse(accessToken, refreshToken);
     }
 
     @Override
@@ -112,6 +96,22 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(MemberNotFoundException::new);
 
         memberRepository.deleteById(id);
+    }
+
+    @Transactional
+    public TokenResponse createToken(String username) {
+        String accessToken = tokenProvider.createAccessToken(username);
+        String refreshToken = tokenProvider.createRefreshToken(username);
+
+        refreshTokenRepository.save(
+                RefreshToken.builder()
+                        .username(username)
+                        .refreshToken(refreshToken)
+                        .expiration(refreshTokenExpirationTime)
+                        .build()
+        );
+
+        return new TokenResponse(accessToken, refreshToken);
     }
 
 }
