@@ -1,6 +1,5 @@
 package com.example.assignment.security.jwt;
 
-import com.example.assignment.exception.InvalidTokenException;
 import com.example.assignment.security.auth.CustomUserDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -83,13 +82,9 @@ public class JwtTokenProvider {
     }
 
     public boolean validateToken(String token) {
-        try {
-            return !getUsername(token)
-                    .getExpiration()
-                    .before(new Date());
-        } catch (Exception e) {
-            throw new InvalidTokenException();
-        }
+        return !getUsername(token)
+                .getExpiration()
+                .before(new Date());
     }
 
     public boolean isRefreshToken(String token) {

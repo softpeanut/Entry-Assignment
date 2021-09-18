@@ -1,5 +1,6 @@
 package com.example.assignment.security.jwt;
 
+import com.example.assignment.exception.InvalidTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,9 +25,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+        else throw new InvalidTokenException();
 
         filterChain.doFilter(request, response);
-
     }
 
 }
