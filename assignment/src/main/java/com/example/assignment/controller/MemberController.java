@@ -23,11 +23,13 @@ public class MemberController {
     }
 
     @PostMapping("/auth/login")
+    @ResponseStatus(HttpStatus.CREATED)
     public TokenResponse login(@Valid @RequestBody LoginRequest request) {
         return memberService.login(request);
     }
 
     @PutMapping("/auth/reissue")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public TokenResponse reissue(@RequestHeader(name = "X-Refresh-Token") String token) {
         return memberService.reissue(token);
     }
@@ -38,7 +40,8 @@ public class MemberController {
     }
 
     @DeleteMapping("/{member-id}")
-    public void removeFeed(@PathVariable(name = "member-id") Integer id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeMember(@PathVariable(name = "member-id") Integer id) {
         memberService.removeMember(id);
     }
 

@@ -37,16 +37,19 @@ public class FeedController {
     }
 
     @DeleteMapping("/{feed-id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeFeed(@PathVariable(name = "feed-id") Integer id) {
         feedService.removeFeed(id);
     }
 
     @PostMapping("/bookmark/{feed-id}")
+    @ResponseStatus(HttpStatus.CREATED)
     public void addBookMark(@PathVariable(name = "feed-id") Integer id) {
         feedService.addBookMark(id);
     }
 
     @DeleteMapping("/bookmark/{feed-id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeBookMark(@PathVariable(name = "feed-id") Integer id) {
         feedService.removeBookMark(id);
     }
