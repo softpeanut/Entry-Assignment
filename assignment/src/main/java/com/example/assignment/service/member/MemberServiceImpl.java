@@ -51,6 +51,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public TokenResponse login(LoginRequest request) {
         Member member = memberRepository.findByUsername(request.getUsername())
                 .orElseThrow(MemberNotFoundException::new);
@@ -58,7 +59,18 @@ public class MemberServiceImpl implements MemberService {
         if(!passwordEncoder.matches(request.getPassword(), member.getPassword()))
             throw new InvalidPasswordException();
 
-        return createToken(request.getUsername());
+        String accessToken = tokenProvider.createAccessToken(request.getUsername());
+        String refreshToken = tokenProvider.createRefreshToken(request.getUsername());
+
+        refreshTokenRepository.save(
+                RefreshToken.builder()
+                        .username(request.getUsername())
+                        .refreshToken(refreshToken)
+                        .expiration(refreshTokenExpirationTime)
+                        .build()
+        );
+
+        return new TokenResponse(accessToken, refreshToken);
     }
 
     @Override
@@ -96,22 +108,6 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(MemberNotFoundException::new);
 
         memberRepository.deleteById(id);
-    }
-
-    @Transactional
-    public TokenResponse createToken(String username) {
-        String accessToken = tokenProvider.createAccessToken(username);
-        String refreshToken = tokenProvider.createRefreshToken(username);
-
-        refreshTokenRepository.save(
-                RefreshToken.builder()
-                        .username(username)
-                        .refreshToken(refreshToken)
-                        .expiration(refreshTokenExpirationTime)
-                        .build()
-        );
-
-        return new TokenResponse(accessToken, refreshToken);
     }
 
 }
