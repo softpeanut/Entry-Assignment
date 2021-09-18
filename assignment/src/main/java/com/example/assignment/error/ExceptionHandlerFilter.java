@@ -2,6 +2,9 @@ package com.example.assignment.error;
 
 import com.example.assignment.error.exception.BusinessException;
 import com.example.assignment.error.exception.ExceptionResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -25,8 +28,12 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
             response.setStatus(e.getErrorCode().getStatus());
             response.setContentType("application/json");
-            response.getWriter().write(exceptionResponse.toString());
+            response.getWriter().write(convertToJson(exceptionResponse));
         }
+    }
+
+    public String convertToJson(Object object) throws JsonProcessingException {
+        return new ObjectMapper().writeValueAsString(object);
     }
 
 }
