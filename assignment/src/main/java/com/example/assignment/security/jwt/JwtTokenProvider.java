@@ -1,9 +1,10 @@
 package com.example.assignment.security.jwt;
 
+import com.example.assignment.exception.ExpiredTokenException;
+import com.example.assignment.exception.IncorrectTokenException;
+import com.example.assignment.exception.InvalidTokenException;
 import com.example.assignment.security.auth.CustomUserDetailsService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -78,7 +79,18 @@ public class JwtTokenProvider {
     }
 
     public Claims getUsername(String token) {
-        return Jwts.parser().setSigningKey(init()).parseClaimsJws(token).getBody();
+        try {
+            return Jwts.parser()
+                    .setSigningKey(init())
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (MalformedJwtException | UnsupportedJwtException e) { // 올바르게 구성 x or 지원하지 않는
+            throw new IncorrectTokenException();
+        } catch (ExpiredJwtException e) { // 만료됨
+            throw new ExpiredTokenException();
+        } catch (Exception e) {
+            throw new InvalidTokenException();
+        }
     }
 
     public boolean validateToken(String token) {
