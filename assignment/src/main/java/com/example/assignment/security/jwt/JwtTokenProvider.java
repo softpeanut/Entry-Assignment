@@ -84,9 +84,9 @@ public class JwtTokenProvider {
                     .setSigningKey(init())
                     .parseClaimsJws(token)
                     .getBody();
-        } catch (MalformedJwtException | UnsupportedJwtException e) { // 올바르게 구성 x or 지원하지 않는
+        } catch (MalformedJwtException | UnsupportedJwtException e) {
             throw new IncorrectTokenException();
-        } catch (ExpiredJwtException e) { // 만료됨
+        } catch (ExpiredJwtException e) {
             throw new ExpiredTokenException();
         } catch (Exception e) {
             throw new InvalidTokenException();
