@@ -30,7 +30,7 @@ public class FeedServiceImpl implements FeedService {
     @Transactional
     public void createFeed(FeedRequest request) {
 
-        Member member = memberRepository.findById(MemberFacade.getCurrentMemberId())
+        Member member = memberRepository.findById(MemberFacade.getMemberId())
                 .orElseThrow(MemberNotFoundException::new);
 
         feedRepository.save(Feed.builder()
@@ -87,7 +87,7 @@ public class FeedServiceImpl implements FeedService {
     @Override
     @Transactional
     public void addBookMark(Integer id) {
-        Member member = memberRepository.findById(MemberFacade.getCurrentMemberId())
+        Member member = memberRepository.findById(MemberFacade.getMemberId())
                 .orElseThrow(MemberNotFoundException::new);
 
         Feed feed = feedRepository.findById(id)
@@ -105,7 +105,7 @@ public class FeedServiceImpl implements FeedService {
     @Override
     @Transactional
     public void removeBookMark(Integer id) {
-        BookMark bookMark = bookMarkRepository.findByMemberIdAndFeedId(MemberFacade.getCurrentMemberId(), id)
+        BookMark bookMark = bookMarkRepository.findByMemberIdAndFeedId(MemberFacade.getMemberId(), id)
                 .orElseThrow(BookMarkNotFoundException::new);
 
         bookMarkRepository.deleteById(bookMark.getId());
@@ -114,7 +114,7 @@ public class FeedServiceImpl implements FeedService {
     @Override
     @Transactional(readOnly = true)
     public List<FeedResponse> myBookMarkFeeds() {
-        return bookMarkRepository.findByMemberId(MemberFacade.getCurrentMemberId())
+        return bookMarkRepository.findByMemberId(MemberFacade.getMemberId())
                 .stream()
                 .map(bookMark -> {
                     FeedResponse response = FeedResponse.builder()

@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class MemberFacade {
 
-    public static Integer getCurrentMemberId() {
+    public static Integer getMemberId() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if(authentication == null || authentication.getPrincipal() == null)

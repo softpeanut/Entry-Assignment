@@ -90,13 +90,13 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void updatePassword(UpdatePasswordRequest request) {
-        Member member = memberRepository.findById(MemberFacade.getCurrentMemberId())
+        Member member = memberRepository.findById(MemberFacade.getMemberId())
                 .orElseThrow(MemberNotFoundException::new);
 
         if(!passwordEncoder.matches(request.getPassword(), member.getPassword()))
             throw new InvalidPasswordException();
 
-        memberRepository.findById(MemberFacade.getCurrentMemberId())
+        memberRepository.findById(MemberFacade.getMemberId())
                 .map(password -> password.updatePassword(passwordEncoder.encode(request.getNewPassword())))
                 .orElseThrow(MemberNotFoundException::new);
     }
