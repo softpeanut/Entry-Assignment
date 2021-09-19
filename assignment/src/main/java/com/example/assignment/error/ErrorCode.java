@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
 
+    EXPIRED_TOKEN(401, "Expire Token"),
     INVALID_TOKEN(401, "Invalid Token"),
     INVALID_PASSWORD(401, "Invalid Password"),
 
