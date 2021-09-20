@@ -34,7 +34,9 @@ public class Member implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "member",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.REMOVE)
     private List<Feed> feeds;
 
     @Override
