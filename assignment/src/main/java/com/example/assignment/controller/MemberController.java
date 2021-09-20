@@ -23,7 +23,6 @@ public class MemberController {
     }
 
     @PostMapping("/auth/login")
-    @ResponseStatus(HttpStatus.CREATED)
     public TokenResponse login(@Valid @RequestBody LoginRequest request) {
         return memberService.login(request);
     }
