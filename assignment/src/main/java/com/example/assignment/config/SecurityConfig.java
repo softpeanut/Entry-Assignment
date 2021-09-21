@@ -37,7 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/member/auth/signup").permitAll()
                 .antMatchers("/member/auth/login").permitAll()
-                .antMatchers("/member/auth/reissue").permitAll()
 
                 .antMatchers("/feed/show").permitAll()
                 .antMatchers("/feed/show/{feed-id}").permitAll()
