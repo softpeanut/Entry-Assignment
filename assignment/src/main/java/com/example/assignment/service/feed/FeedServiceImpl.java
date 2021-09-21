@@ -111,20 +111,4 @@ public class FeedServiceImpl implements FeedService {
         bookMarkRepository.deleteById(bookMark.getId());
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<FeedResponse> myBookMarkFeeds() {
-        return bookMarkRepository.findByMemberId(MemberFacade.getMemberId())
-                .stream()
-                .map(bookMark -> {
-                    FeedResponse response = FeedResponse.builder()
-                            .id(bookMark.getFeed().getId())
-                            .title(bookMark.getFeed().getTitle())
-                            .content(bookMark.getFeed().getContent())
-                            .build();
-                    return response;
-                })
-                .collect(Collectors.toList());
-    }
-
 }

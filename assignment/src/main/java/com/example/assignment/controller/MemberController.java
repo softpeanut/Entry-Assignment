@@ -1,5 +1,6 @@
 package com.example.assignment.controller;
 
+import com.example.assignment.payload.feed.response.FeedResponse;
 import com.example.assignment.payload.member.request.LoginRequest;
 import com.example.assignment.payload.member.request.SignupRequest;
 import com.example.assignment.payload.member.request.UpdatePasswordRequest;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,6 +45,11 @@ public class MemberController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeMember() {
         memberService.removeMember();
+    }
+
+    @GetMapping("/bookmarks")
+    public List<FeedResponse> myBookMarkFeeds() {
+        return memberService.myBookMarkFeeds();
     }
 
 }
