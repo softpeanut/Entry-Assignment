@@ -31,8 +31,8 @@ public class MemberController {
 
     @PutMapping("/auth/reissue")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public TokenResponse reissue(@RequestHeader(name = "X-Refresh-Token") String token) {
-        return memberService.reissue(token);
+    public TokenResponse reissue(@RequestHeader(name = "X-Refresh-Token") String refreshToken) {
+        return memberService.reissue(refreshToken);
     }
 
     @PatchMapping("/password")
