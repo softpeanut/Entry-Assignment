@@ -48,7 +48,7 @@ public class JwtTokenProvider {
                 .setSubject(username)
                 .claim("type", "access")
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpirationTime * 30))
+                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpirationTime))
                 .signWith(SignatureAlgorithm.HS256, init())
                 .compact();
     }

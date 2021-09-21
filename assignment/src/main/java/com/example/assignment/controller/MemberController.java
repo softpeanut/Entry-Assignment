@@ -39,10 +39,10 @@ public class MemberController {
         memberService.updatePassword(request);
     }
 
-    @DeleteMapping("/{member-id}")
+    @DeleteMapping("/remove")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeMember(@PathVariable(name = "member-id") Integer id) {
-        memberService.removeMember(id);
+    public void removeMember() {
+        memberService.removeMember();
     }
 
 }
