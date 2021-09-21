@@ -2,8 +2,6 @@ package com.example.assignment.error;
 
 import com.example.assignment.error.exception.BusinessException;
 import com.example.assignment.error.exception.ExceptionResponse;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import javax.servlet.FilterChain;

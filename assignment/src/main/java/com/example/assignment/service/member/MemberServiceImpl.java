@@ -103,11 +103,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void removeMember(Integer id) {
-        memberRepository.findById(id)
+    public void removeMember() {
+        memberRepository.findById(MemberFacade.getMemberId())
                 .orElseThrow(MemberNotFoundException::new);
 
-        memberRepository.deleteById(id);
+        memberRepository.deleteById(MemberFacade.getMemberId());
     }
 
 }
