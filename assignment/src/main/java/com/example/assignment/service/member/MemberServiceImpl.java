@@ -86,7 +86,7 @@ public class MemberServiceImpl implements MemberService {
             throw new InvalidTokenException();
 
         RefreshToken newRefreshToken = refreshTokenRepository.findByRefreshToken(refreshToken)
-                .map(token -> token.updateExpiration(refreshTokenExpirationTime))
+                .map(refresh -> refresh.updateExpiration(refreshTokenExpirationTime))
                 .orElseThrow(InvalidTokenException::new);
 
         return new TokenResponse(tokenProvider.createAccessToken(newRefreshToken.getUsername()), refreshToken);

@@ -30,7 +30,7 @@ public class MemberController {
     }
 
     @PutMapping("/auth/reissue")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.CREATED)
     public TokenResponse reissue(@RequestHeader(name = "X-Refresh-Token") String refreshToken) {
         return memberService.reissue(refreshToken);
     }
