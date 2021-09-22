@@ -3,11 +3,11 @@ package com.example.assignment.payload.feed.response;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import javax.validation.constraints.NotEmpty;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
-@NotEmpty
+@NoArgsConstructor
 @AllArgsConstructor
 public class FeedResponse {
     private Integer id;

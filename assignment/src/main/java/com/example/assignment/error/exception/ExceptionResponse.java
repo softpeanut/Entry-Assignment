@@ -11,9 +11,7 @@ public class ExceptionResponse {
     private String message;
 
     public String convertToJson(Object object) throws JsonProcessingException {
-        if(object == null)
-            return null;
-
         return new ObjectMapper().writeValueAsString(object);
     }
+
 }
