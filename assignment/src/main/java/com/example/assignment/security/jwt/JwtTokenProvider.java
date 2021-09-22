@@ -102,11 +102,15 @@ public class JwtTokenProvider {
 
     public boolean isRefreshToken(String refreshToken) {
         try {
-            return Jwts.parser()
+            Claims claims = Jwts.parser()
                     .setSigningKey(init())
                     .parseClaimsJws(refreshToken)
-                    .getBody()
-                    .get("type").equals("refresh");
+                    .getBody();
+
+            if(!claims.get("type").equals("refresh") || !claims.getExpiration().before(new Date()))
+                return false;
+
+            return true;
         } catch (MalformedJwtException | UnsupportedJwtException e) {
             throw new IncorrectTokenException();
         } catch (ExpiredJwtException e) {
