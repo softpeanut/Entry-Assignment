@@ -81,13 +81,12 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public TokenResponse reissue(String refreshToken) {
-        if(!tokenProvider.isRefreshToken(refreshToken)
-                || !tokenProvider.validateToken(refreshToken))
-            throw new InvalidTokenException();
+        tokenProvider.isRefreshToken(refreshToken);
+        tokenProvider.validateToken(refreshToken);
 
         RefreshToken newRefreshToken = refreshTokenRepository.findByRefreshToken(refreshToken)
                 .map(refresh -> refresh.updateExpiration(refreshTokenExpirationTime))
-                .orElseThrow(InvalidTokenException::new);
+                .orElseThrow(ExpiredRefreshTokenException::new);
 
         return new TokenResponse(tokenProvider.createAccessToken(newRefreshToken.getUsername()), refreshToken);
     }
