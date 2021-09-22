@@ -1,6 +1,7 @@
 package com.example.assignment.security.jwt;
 
-import com.example.assignment.exception.ExpiredTokenException;
+import com.example.assignment.exception.ExpiredAccessTokenException;
+import com.example.assignment.exception.ExpiredRefreshTokenException;
 import com.example.assignment.exception.IncorrectTokenException;
 import com.example.assignment.exception.InvalidTokenException;
 import com.example.assignment.security.auth.CustomUserDetailsService;
@@ -87,7 +88,7 @@ public class JwtTokenProvider {
         } catch (MalformedJwtException | UnsupportedJwtException e) {
             throw new IncorrectTokenException();
         } catch (ExpiredJwtException e) {
-            throw new ExpiredTokenException();
+            throw new ExpiredAccessTokenException();
         } catch (Exception e) {
             throw new InvalidTokenException();
         }
@@ -99,8 +100,20 @@ public class JwtTokenProvider {
                 .before(new Date());
     }
 
-    public boolean isRefreshToken(String token) {
-        return getUsername(token).get("type").equals("refresh");
+    public boolean isRefreshToken(String refreshToken) {
+        try {
+            return Jwts.parser()
+                    .setSigningKey(init())
+                    .parseClaimsJws(refreshToken)
+                    .getBody()
+                    .get("type").equals("refresh");
+        } catch (MalformedJwtException | UnsupportedJwtException e) {
+            throw new IncorrectTokenException();
+        } catch (ExpiredJwtException e) {
+            throw new ExpiredRefreshTokenException();
+        } catch (Exception e) {
+            throw new InvalidTokenException();
+        }
     }
 
 }
