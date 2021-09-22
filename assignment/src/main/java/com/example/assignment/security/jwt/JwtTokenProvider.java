@@ -60,7 +60,7 @@ public class JwtTokenProvider {
                 .setSubject(username)
                 .claim("type", "refresh")
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpirationTime))
+                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpirationTime * 1000))
                 .signWith(SignatureAlgorithm.HS256, init())
                 .compact();
     }
