@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor // 역직렬화
 public class LoginRequest {
 
     @NotBlank
