@@ -18,10 +18,10 @@ public class RefreshToken implements Serializable {
     @Id
     private String username;
 
-    @Indexed
+    @Indexed // refreshToken으로 데이터 조회
     private String refreshToken;
 
-    @TimeToLive
+    @TimeToLive // 데이터의 유효기간 설정
     private Long expiration;
 
     public RefreshToken updateExpiration(Long expiration) {
