@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Getter
-@Builder
+@Builder // AllArgs 필요
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity // NoArgs 필요
 public class BookMark {
 
     @Id

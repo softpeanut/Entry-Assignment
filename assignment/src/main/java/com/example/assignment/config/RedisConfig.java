@@ -19,6 +19,7 @@ public class RedisConfig {
     @Value("${spring.redis.port}")
     private int redisPort;
 
+    // redis와 연결
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisConfig =
@@ -27,6 +28,7 @@ public class RedisConfig {
         return new LettuceConnectionFactory(redisConfig);
     }
 
+    // 직렬화 처리
     @Bean
     public RedisTemplate<?, ?> redisTemplate() {
         RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
