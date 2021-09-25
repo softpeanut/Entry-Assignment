@@ -36,7 +36,7 @@ public class MemberController {
 
     @PatchMapping("/password")
     @ResponseStatus(HttpStatus.CREATED)
-    public void updatePassword(@RequestBody UpdatePasswordRequest request) {
+    public void updatePassword(@Valid @RequestBody UpdatePasswordRequest request) {
         memberService.updatePassword(request);
     }
 
