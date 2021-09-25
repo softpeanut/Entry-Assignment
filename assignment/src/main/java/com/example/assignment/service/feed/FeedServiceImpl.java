@@ -69,9 +69,7 @@ public class FeedServiceImpl implements FeedService {
     @Transactional
     public void updateFeed(Integer id, FeedRequest request) {
         feedRepository.findById(id)
-                .map(feed -> feedRepository.save(
-                        feed.update(request.getTitle(), request.getContent())
-                ))
+                .map(feed -> feed.update(request.getTitle(), request.getContent()))
                 .orElseThrow(FeedNotFoundException::new);
     }
 
