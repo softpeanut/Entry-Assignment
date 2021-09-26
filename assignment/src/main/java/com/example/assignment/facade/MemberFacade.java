@@ -4,7 +4,6 @@ import com.example.assignment.entity.member.Member;
 import com.example.assignment.exception.MemberNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public class MemberFacade {
 
@@ -14,8 +13,7 @@ public class MemberFacade {
         if(authentication == null || authentication.getPrincipal() == null)
             throw new MemberNotFoundException();
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Member member = (Member) userDetails;
+        Member member = (Member) authentication.getPrincipal();
 
         return member.getId();
     }
